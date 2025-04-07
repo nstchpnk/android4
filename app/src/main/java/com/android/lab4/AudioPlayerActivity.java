@@ -8,6 +8,9 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.*;
 import android.content.Intent;
+import android.database.Cursor;
+import android.provider.OpenableColumns;
+
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -144,15 +147,25 @@ public class AudioPlayerActivity extends AppCompatActivity {
 
     private String getSongTitle(String fileUriString) {
         Uri uri = Uri.parse(fileUriString);
-        String songName = uri.getLastPathSegment();
-        if (songName != null && songName.contains("/")) {
-            songName = songName.substring(songName.lastIndexOf('/') + 1);
+        String songName = "Без назви";
+
+        try (Cursor cursor = getContentResolver().query(uri, null, null, null, null)) {
+            if (cursor != null && cursor.moveToFirst()) {
+                int nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+                if (nameIndex >= 0) {
+                    songName = cursor.getString(nameIndex);
+                    if (songName.contains(".")) {
+                        songName = songName.substring(0, songName.lastIndexOf('.'));
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        if (songName != null && songName.contains(".")) {
-            songName = songName.substring(0, songName.lastIndexOf('.'));
-        }
-        return songName != null ? songName : "Без назви";
+
+        return songName;
     }
+
 
     private void pickAudioFile() {
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);

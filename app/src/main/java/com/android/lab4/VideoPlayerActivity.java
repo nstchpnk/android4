@@ -1,6 +1,5 @@
 package com.android.lab4;
 
-import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,7 +12,8 @@ import android.widget.Toast;
 import android.widget.VideoView;
 import android.widget.Button;
 
-
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.concurrent.TimeUnit;
@@ -28,7 +28,31 @@ public class VideoPlayerActivity extends AppCompatActivity {
     private TextView tvTotalTime;
     private Handler handler;
     private Runnable runnable;
+    private Button btnBack, btnSelectFile;
     private boolean isWebUrl = false;
+
+    private final ActivityResultLauncher<String> pickVideo = registerForActivityResult(
+            new ActivityResultContracts.GetContent(),
+            uri -> {
+                if (uri != null) {
+                    if (videoView.isPlaying()) {
+                        videoView.stopPlayback();
+                    }
+
+                    try {
+                        videoView.setVideoURI(uri);
+                        videoView.requestFocus();
+                        btnPlay.setVisibility(View.VISIBLE);
+                        btnPause.setVisibility(View.GONE);
+                        seekBar.setProgress(0);
+                        updateCurrentTime();
+                    } catch (Exception e) {
+                        Toast.makeText(VideoPlayerActivity.this,
+                                "Помилка завантаження відео: " + e.getMessage(),
+                                Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +66,10 @@ public class VideoPlayerActivity extends AppCompatActivity {
         seekBar = findViewById(R.id.seek_bar);
         tvCurrentTime = findViewById(R.id.tv_current_time);
         tvTotalTime = findViewById(R.id.tv_total_time);
+        btnSelectFile = findViewById(R.id.btn_select_file);
+        btnBack = findViewById(R.id.btn_back);
+
+        btnSelectFile.setOnClickListener(v -> pickVideoFile());
 
         handler = new Handler();
 
@@ -52,62 +80,35 @@ public class VideoPlayerActivity extends AppCompatActivity {
         mediaController.setAnchorView(videoView);
         videoView.setMediaController(mediaController);
 
-        try {
-            Uri videoUri = Uri.parse(fileUriString);
-            videoView.setVideoURI(videoUri);
-        } catch (Exception e) {
-            Toast.makeText(this, "Помилка завантаження відео: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-            finish();
+        if (fileUriString != null && !fileUriString.isEmpty()) {
+            try {
+                Uri videoUri = Uri.parse(fileUriString);
+                videoView.setVideoURI(videoUri);
+            } catch (Exception e) {
+                Toast.makeText(this, "Помилка завантаження відео: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
         }
 
-        Button btnBack = findViewById(R.id.btn_back);
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
+        btnBack.setOnClickListener(v -> finish());
+
+        videoView.setOnPreparedListener(mp -> {
+            seekBar.setMax(videoView.getDuration());
+            tvTotalTime.setText(formatTime(videoView.getDuration()));
+            updateSeekBar();
+            playVideo();
         });
 
-
-        videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mp) {
-                seekBar.setMax(videoView.getDuration());
-                tvTotalTime.setText(formatTime(videoView.getDuration()));
-                updateSeekBar();
-                playVideo();
-            }
+        videoView.setOnCompletionListener(mp -> {
+            btnPlay.setVisibility(View.VISIBLE);
+            btnPause.setVisibility(View.GONE);
+            handler.removeCallbacks(runnable);
         });
 
-        videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                btnPlay.setVisibility(View.VISIBLE);
-                btnPause.setVisibility(View.GONE);
-                handler.removeCallbacks(runnable);
-            }
-        });
+        btnPlay.setOnClickListener(v -> playVideo());
 
-        btnPlay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                playVideo();
-            }
-        });
+        btnPause.setOnClickListener(v -> pauseVideo());
 
-        btnPause.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                pauseVideo();
-            }
-        });
-
-        btnStop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                stopVideo();
-            }
-        });
+        btnStop.setOnClickListener(v -> stopVideo());
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -126,6 +127,10 @@ public class VideoPlayerActivity extends AppCompatActivity {
             public void onStopTrackingTouch(SeekBar seekBar) {
             }
         });
+    }
+
+    private void pickVideoFile() {
+        pickVideo.launch("video/*");
     }
 
     private void playVideo() {
@@ -152,7 +157,6 @@ public class VideoPlayerActivity extends AppCompatActivity {
         handler.removeCallbacks(runnable);
         seekBar.setProgress(0);
         updateCurrentTime();
-        finish();
     }
 
     private void updateSeekBar() {
@@ -160,12 +164,7 @@ public class VideoPlayerActivity extends AppCompatActivity {
         updateCurrentTime();
 
         if (videoView.isPlaying()) {
-            runnable = new Runnable() {
-                @Override
-                public void run() {
-                    updateSeekBar();
-                }
-            };
+            runnable = () -> updateSeekBar();
             handler.postDelayed(runnable, 1000);
         }
     }
@@ -185,6 +184,8 @@ public class VideoPlayerActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        handler.removeCallbacks(runnable);
+        if (handler != null && runnable != null) {
+            handler.removeCallbacks(runnable);
+        }
     }
 }

@@ -1,81 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:padding="16dp">
 
     <VideoView
         android:id="@+id/video_view"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_marginBottom="16dp"/>
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" />
 
     <LinearLayout
+        android:id="@+id/controls_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center">
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true">
 
-        <TextView
-            android:id="@+id/tv_current_time"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="00:00"
-            android:layout_marginEnd="8dp"/>
+            android:orientation="horizontal"
+            android:gravity="center">
 
-        <SeekBar
-            android:id="@+id/seek_bar"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            <TextView
+                android:id="@+id/tv_current_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00:00"
+                android:layout_marginEnd="8dp" />
 
-        <TextView
-            android:id="@+id/tv_total_time"
-            android:layout_width="wrap_content"
+            <SeekBar
+                android:id="@+id/seek_bar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/tv_total_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00:00"
+                android:layout_marginStart="8dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="00:00"
-            android:layout_marginStart="8dp"/>
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="16dp">
+
+            <ImageButton
+                android:id="@+id/btn_play"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:src="@drawable/ic_play"
+                android:contentDescription="Play"
+                android:layout_marginEnd="16dp" />
+
+            <ImageButton
+                android:id="@+id/btn_pause"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:src="@drawable/ic_pause"
+                android:contentDescription="Pause"
+                android:visibility="gone"
+                android:layout_marginEnd="16dp" />
+
+            <ImageButton
+                android:id="@+id/btn_stop"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:src="@drawable/ic_stop"
+                android:contentDescription="Stop" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="16dp">
+
+            <Button
+                android:id="@+id/btn_select_file"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Вибрати файл" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_back"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Повернутися назад"
+            android:layout_marginTop="16dp" />
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_marginTop="16dp">
-
-        <ImageButton
-            android:id="@+id/btn_play"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:src="@drawable/ic_play"
-            android:contentDescription="Play"
-            android:layout_marginEnd="16dp"/>
-
-        <ImageButton
-            android:id="@+id/btn_pause"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:src="@drawable/ic_pause"
-            android:contentDescription="Pause"
-            android:visibility="gone"
-            android:layout_marginEnd="16dp"/>
-
-        <ImageButton
-            android:id="@+id/btn_stop"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:src="@drawable/ic_stop"
-            android:contentDescription="Stop"/>
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/btn_back"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Повернутися назад"/>
-
-
-</LinearLayout>
+</RelativeLayout>
