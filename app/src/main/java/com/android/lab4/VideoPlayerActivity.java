@@ -83,11 +83,16 @@ public class VideoPlayerActivity extends AppCompatActivity {
         if (fileUriString != null && !fileUriString.isEmpty()) {
             try {
                 Uri videoUri = Uri.parse(fileUriString);
-                videoView.setVideoURI(videoUri);
+                if (isWebUrl) {
+                    videoView.setVideoURI(videoUri);
+                } else {
+                    videoView.setVideoURI(videoUri);
+                }
             } catch (Exception e) {
                 Toast.makeText(this, "Помилка завантаження відео: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }
+
 
         btnBack.setOnClickListener(v -> finish());
 

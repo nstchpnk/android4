@@ -11,7 +11,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.provider.OpenableColumns;
 
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.IOException;
@@ -87,6 +86,7 @@ public class AudioPlayerActivity extends AppCompatActivity {
         }
     }
 
+
     private void updateSeekBar() {
         if (mediaPlayer != null) {
             runnable = new Runnable() {
@@ -146,21 +146,33 @@ public class AudioPlayerActivity extends AppCompatActivity {
     }
 
     private String getSongTitle(String fileUriString) {
-        Uri uri = Uri.parse(fileUriString);
         String songName = "Без назви";
 
-        try (Cursor cursor = getContentResolver().query(uri, null, null, null, null)) {
-            if (cursor != null && cursor.moveToFirst()) {
-                int nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
-                if (nameIndex >= 0) {
-                    songName = cursor.getString(nameIndex);
-                    if (songName.contains(".")) {
-                        songName = songName.substring(0, songName.lastIndexOf('.'));
+        // Перевіряємо, чи є URI локальним чи віддаленим
+        if (fileUriString != null && fileUriString.startsWith("http")) {
+            // Якщо це віддалений файл, намагаємося отримати ім'я з URL
+            songName = fileUriString.substring(fileUriString.lastIndexOf("/") + 1);
+
+            // Якщо ім'я файлу містить розширення, видаляємо його
+            if (songName.contains(".")) {
+                songName = songName.substring(0, songName.lastIndexOf('.'));
+            }
+        } else {
+            // Якщо це локальний файл, використовуємо попередній метод для отримання назви
+            Uri uri = Uri.parse(fileUriString);
+            try (Cursor cursor = getContentResolver().query(uri, null, null, null, null)) {
+                if (cursor != null && cursor.moveToFirst()) {
+                    int nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+                    if (nameIndex >= 0) {
+                        songName = cursor.getString(nameIndex);
+                        if (songName.contains(".")) {
+                            songName = songName.substring(0, songName.lastIndexOf('.'));
+                        }
                     }
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
 
         return songName;
