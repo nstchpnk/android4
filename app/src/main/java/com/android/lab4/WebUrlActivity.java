@@ -59,4 +59,5 @@ public class WebUrlActivity extends AppCompatActivity {
             }
         });
     }
+
 }

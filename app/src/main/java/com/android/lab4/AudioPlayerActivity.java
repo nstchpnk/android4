@@ -148,17 +148,13 @@ public class AudioPlayerActivity extends AppCompatActivity {
     private String getSongTitle(String fileUriString) {
         String songName = "Без назви";
 
-        // Перевіряємо, чи є URI локальним чи віддаленим
         if (fileUriString != null && fileUriString.startsWith("http")) {
-            // Якщо це віддалений файл, намагаємося отримати ім'я з URL
             songName = fileUriString.substring(fileUriString.lastIndexOf("/") + 1);
 
-            // Якщо ім'я файлу містить розширення, видаляємо його
             if (songName.contains(".")) {
                 songName = songName.substring(0, songName.lastIndexOf('.'));
             }
         } else {
-            // Якщо це локальний файл, використовуємо попередній метод для отримання назви
             Uri uri = Uri.parse(fileUriString);
             try (Cursor cursor = getContentResolver().query(uri, null, null, null, null)) {
                 if (cursor != null && cursor.moveToFirst()) {

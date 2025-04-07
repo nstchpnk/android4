@@ -110,9 +110,7 @@ public class VideoPlayerActivity extends AppCompatActivity {
         });
 
         btnPlay.setOnClickListener(v -> playVideo());
-
         btnPause.setOnClickListener(v -> pauseVideo());
-
         btnStop.setOnClickListener(v -> stopVideo());
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -194,3 +192,4 @@ public class VideoPlayerActivity extends AppCompatActivity {
         }
     }
 }
+
