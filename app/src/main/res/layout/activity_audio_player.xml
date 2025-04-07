@@ -4,93 +4,116 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:padding="16dp">
+    android:padding="24dp"
+    android:background="#FFF0F5">
 
     <ImageView
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:src="@drawable/ic_audio"
-        android:layout_marginBottom="32dp"/>
+        android:layout_marginBottom="32dp" />
 
     <TextView
         android:id="@+id/tv_song_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Назва пісні"
-        android:textSize="18sp"
-        android:layout_marginBottom="16dp"
-        android:gravity="center"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center">
-
-        <TextView
-            android:id="@+id/tv_current_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="00:00"
-            android:layout_marginEnd="8dp"/>
-
-        <SeekBar
-            android:id="@+id/seek_bar"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"/>
-
-        <TextView
-            android:id="@+id/tv_total_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="00:00"
-            android:layout_marginStart="8dp"/>
-    </LinearLayout>
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="#FF1493"
+        android:layout_marginBottom="20dp"
+        android:gravity="center" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
-        android:layout_marginTop="16dp">
+        android:layout_marginBottom="16dp">
+
+        <TextView
+            android:id="@+id/tv_current_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00:00"
+            android:textColor="#FF1493"
+            android:layout_marginEnd="8dp" />
+
+        <SeekBar
+            android:id="@+id/seek_bar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:progressTint="#FF69B4"
+            android:thumbTint="#FF69B4" />
+
+        <TextView
+            android:id="@+id/tv_total_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00:00"
+            android:textColor="#FF1493"
+            android:layout_marginStart="8dp" />
+    </LinearLayout>
+
+    <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginBottom="16dp">
 
         <ImageButton
             android:id="@+id/btn_play"
             android:layout_width="56dp"
             android:layout_height="56dp"
             android:src="@drawable/ic_play"
+            android:backgroundTint="#FF69B4"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:tint="#F43695"
             android:contentDescription="Play"
-            android:layout_marginEnd="16dp"/>
+            android:layout_marginEnd="16dp" />
 
         <ImageButton
             android:id="@+id/btn_pause"
             android:layout_width="56dp"
             android:layout_height="56dp"
             android:src="@drawable/ic_pause"
+            android:backgroundTint="#FF69B4"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:tint="#F43695"
             android:contentDescription="Pause"
-            android:visibility="gone"
-            android:layout_marginEnd="16dp"/>
+            android:layout_marginEnd="16dp"
+            android:visibility="gone" />
 
         <ImageButton
             android:id="@+id/btn_stop"
             android:layout_width="56dp"
             android:layout_height="56dp"
             android:src="@drawable/ic_stop"
-            android:contentDescription="Stop"/>
+            android:backgroundTint="#FF69B4"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:tint="#F43695"
+            android:contentDescription="Stop" />
     </LinearLayout>
+
 
     <Button
         android:id="@+id/btn_select_file"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Вибрати файл"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"/>
+        android:background="@drawable/rounded_button"
+        android:textColor="#FFFFFF"
+        android:padding="12dp"
+        android:layout_marginBottom="12dp" />
 
     <Button
         android:id="@+id/btn_back"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Повернутися назад"/>
+        android:text="Повернутися назад"
+        android:background="@drawable/rounded_button"
+        android:textColor="#FFFFFF"
+        android:padding="12dp" />
 </LinearLayout>

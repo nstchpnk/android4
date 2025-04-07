@@ -5,35 +5,53 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:padding="16dp"
+    android:padding="24dp"
+    android:background="#FFF0F5"
     tools:context=".MainActivity">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Медіа-програвач"
-        android:textSize="24sp"
+        android:textSize="28sp"
         android:textStyle="bold"
-        android:layout_marginBottom="32dp"/>
+        android:textColor="#FF1493"
+        android:layout_marginBottom="40dp"/>
 
-    <Button
-        android:id="@+id/btn_select_audio"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Вибрати аудіо-файл"
-        android:layout_marginBottom="16dp"/>
+        android:orientation="vertical"
+        android:background="@drawable/pink_rounded_background"
+        android:padding="20dp">
 
-    <Button
-        android:id="@+id/btn_select_video"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Вибрати відео-файл"
-        android:layout_marginBottom="16dp"/>
+        <Button
+            android:id="@+id/btn_select_audio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Вибрати аудіо-файл"
+            android:background="@drawable/rounded_button"
+            android:textColor="#FFFFFF"
+            android:padding="12dp"
+            android:layout_marginBottom="16dp"/>
 
-    <Button
-        android:id="@+id/btn_load_from_web"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Завантажити з Інтернету"/>
+        <Button
+            android:id="@+id/btn_select_video"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Вибрати відео-файл"
+            android:background="@drawable/rounded_button"
+            android:textColor="#FFFFFF"
+            android:padding="12dp"
+            android:layout_marginBottom="16dp"/>
 
+        <Button
+            android:id="@+id/btn_load_from_web"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Завантажити з Інтернету"
+            android:background="@drawable/rounded_button"
+            android:textColor="#FFFFFF"
+            android:padding="12dp"/>
+    </LinearLayout>
 </LinearLayout>

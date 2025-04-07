@@ -1,64 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:background="#FFF0F5"
+    android:padding="24dp">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Введіть URL медіа-файлу:"
-        android:textSize="18sp"
-        android:layout_marginBottom="16dp"/>
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
 
-    <EditText
-        android:id="@+id/edit_text_url"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="https://example.com/media.mp3"
-        android:inputType="textUri"
-        android:layout_marginBottom="16dp"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Тип медіа:"
-        android:textSize="18sp"
-        android:layout_marginBottom="8dp"/>
-
-    <RadioGroup
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="16dp">
-
-        <RadioButton
-            android:id="@+id/radio_audio"
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Аудіо"
-            android:checked="true"
-            android:layout_marginEnd="16dp"/>
+            android:text="Введіть URL медіа-файлу:"
+            android:textSize="18sp"
+            android:textColor="#FF1493"
+            android:layout_marginBottom="12dp"
+            android:textStyle="bold" />
 
-        <RadioButton
-            android:id="@+id/radio_video"
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/edit_text_url"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Відео"/>
-    </RadioGroup>
+            android:hint="https://example.com/media.mp3"
+            android:inputType="textUri"
+            android:background="@drawable/rounded_edit_text"
+            android:padding="12dp"
+            android:textColor="#000000"
+            android:textColorHint="#888888"
+            android:layout_marginBottom="20dp" />
 
-    <Button
-        android:id="@+id/btn_load"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Завантажити"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Тип медіа:"
+            android:textSize="18sp"
+            android:textColor="#FF1493"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp" />
 
-    <Button
-        android:id="@+id/btn_back"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Повернутися назад"/>
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="20dp">
 
+            <RadioButton
+                android:id="@+id/radio_audio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Аудіо"
+                android:textSize="18sp"
+                android:checked="true"
+                android:textColor="#F43695"
+                android:layout_marginEnd="32dp" />
 
-</LinearLayout>
+            <RadioButton
+                android:id="@+id/radio_video"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Відео"
+                android:textSize="18sp"
+                android:textColor="#F43695" />
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/btn_load"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Завантажити"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/rounded_button"
+            android:padding="12dp"
+            android:layout_marginBottom="16dp" />
+
+        <Button
+            android:id="@+id/btn_back"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Повернутися назад"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/rounded_button"
+            android:padding="12dp" />
+    </LinearLayout>
+</ScrollView>
