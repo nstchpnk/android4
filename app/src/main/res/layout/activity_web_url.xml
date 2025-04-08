@@ -24,7 +24,7 @@
             android:id="@+id/edit_text_url"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="https://example.com/media.mp3"
+            android:hint="тиць сюди"
             android:inputType="textUri"
             android:background="@drawable/rounded_edit_text"
             android:padding="12dp"
